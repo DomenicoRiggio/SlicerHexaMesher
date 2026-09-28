@@ -24,8 +24,8 @@ A 3D Slicer extension for converting surface meshes and segmentations into solid
 
 ## Features
 
-### Voxelization
-- Voxelize a **model node** or a **segmentation** (with per-segment selection) into a solid cubical mesh
+### Hexahedron meshing
+- Create a hexahedron mesh of a **model node** or a **segmentation** (with per-segment selection) into a solid cubical mesh
 - Adjustable **pitch** (voxel side length) with a user-defined maximum
 - **Occupancy threshold**: keep only voxels covered by at least a given percentage of the mesh — removes partial-volume boundary voxels
 - Results are automatically named `<input>_vox` and grouped in a **VoxelizedModels** folder in the Subject Hierarchy
@@ -97,7 +97,7 @@ On first load, missing Python dependencies (`trimesh`, `meshio`) are installed a
 ## Dependencies
 
 - [3D Slicer](https://www.slicer.org/) 5.x
-- [trimesh](https://trimsh.org/) — voxelization and mesh processing
+- [trimesh](https://trimsh.org/) — Hexahedron mesh creation and mesh processing
 - [meshio](https://github.com/nschloe/meshio) — MSH format export
 
 Dependencies are installed automatically on first use.
