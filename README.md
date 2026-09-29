@@ -3,7 +3,7 @@
 # SlicerHexaMesher
 <br>
 
-<img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/develop/HexaMesher/Resources/Icons/HexaMesher.png?raw=true" alt="drawing" style="width:300px;"/>
+<img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/main/HexaMesher/Resources/Icons/HexaMesher.png" alt="drawing" style="width:300px;"/>
 
 
 
@@ -15,7 +15,7 @@
 A 3D Slicer extension for converting surface meshes and segmentations into solid cubical voxel models, with support for boolean operations, quantitative metrics, and multi-format export.
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/develop/HexaMesher/Resources/Icons/Examples.png?raw=true" alt="Examples" width="900"/>
+  <img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/main/HexaMesher/Resources/Icons/Examples.png?raw=true" alt="Examples" width="900"/>
 </div>
 
 ---
