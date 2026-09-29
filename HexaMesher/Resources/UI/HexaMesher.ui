@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Voxelization</class>
- <widget class="qMRMLWidget" name="Voxelization">
+ <class>HexaMesher</class>
+ <widget class="qMRMLWidget" name="HexaMesher">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -406,7 +406,7 @@
    <item>
     <widget class="QPushButton" name="voxelButton">
      <property name="toolTip">
-      <string>Run the voxelization.</string>
+      <string>Run the HexaMesher.</string>
      </property>
      <property name="text">
       <string>Apply</string>
@@ -762,7 +762,7 @@
 
  <connections>
   <connection>
-   <sender>Voxelization</sender>
+   <sender>HexaMesher</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>inputModelSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -772,7 +772,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>Voxelization</sender>
+   <sender>HexaMesher</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>booleanOutputSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -782,7 +782,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>Voxelization</sender>
+   <sender>HexaMesher</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>outputSelectorModel</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -792,7 +792,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>Voxelization</sender>
+   <sender>HexaMesher</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>inputVolumeSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>
@@ -802,7 +802,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>Voxelization</sender>
+   <sender>HexaMesher</sender>
    <signal>mrmlSceneChanged(vtkMRMLScene*)</signal>
    <receiver>inputSegmentationSelector</receiver>
    <slot>setMRMLScene(vtkMRMLScene*)</slot>

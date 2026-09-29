@@ -3,7 +3,7 @@
 # SlicerHexaMesher
 <br>
 
-<img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerModelsVoxelization/refs/heads/develop/Voxelization/Resources/Icons/Voxelization.png?raw=true" alt="drawing" style="width:300px;"/>
+<img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/develop/HexaMesher/Resources/Icons/HexaMesher.png?raw=true" alt="drawing" style="width:300px;"/>
 
 
 
@@ -15,7 +15,7 @@
 A 3D Slicer extension for converting surface meshes and segmentations into solid cubical voxel models, with support for boolean operations, quantitative metrics, and multi-format export.
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerModelsVoxelization/refs/heads/develop/Voxelization/Resources/Icons/Examples.png?raw=true" alt="Examples" width="900"/>
+  <img src="https://raw.githubusercontent.com/DomenicoRiggio/SlicerHexaMesher/refs/heads/develop/HexaMesher/Resources/Icons/Examples.png?raw=true" alt="Examples" width="900"/>
 </div>
 
 ---
@@ -58,9 +58,9 @@ A 3D Slicer extension for converting surface meshes and segmentations into solid
 1. Clone or download this repository
 2. Open 3D Slicer
 3. Go to **Edit → Application Settings → Modules**
-4. Add the path to the `Voxelization` folder under **Additional module paths**
+4. Add the path to the `HexaMesher` folder under **Additional module paths**
 5. Restart 3D Slicer
-6. The module appears under **Modules → Utilities → Voxelization**
+6. The module appears under **Modules → Utilities → HexaMesher**
 
 On first load, missing Python dependencies (`trimesh`, `meshio`) are installed automatically with a confirmation dialog.
 
@@ -71,7 +71,7 @@ On first load, missing Python dependencies (`trimesh`, `meshio`) are installed a
 ### Basic workflow
 
 1. Load a volume (MRI/CT) and a model or segmentation into the scene
-2. Open the **Voxelization** module
+2. Open the **HexaMesher** module
 3. Select **Input Type**: Segmentation or Model
 4. Select the input segmentation/model, segment, and reference volume
 5. Set **Pitch** (voxel size in cm³) and **Threshold** (occupancy filter, 0.0–1.0)

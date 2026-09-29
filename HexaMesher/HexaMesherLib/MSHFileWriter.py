@@ -40,7 +40,7 @@ class MSHFileWriter:
             node     = slicer.mrmlScene.GetNodeByID(properties["nodeID"])
             filePath = properties["fileName"]
 
-            from VoxelizationLib.logicUtils import exportModelMSH
+            from HexaMesherLib.logicUtils import exportModelMSH
             exportModelMSH(node, filePath)
 
         except Exception as e:
