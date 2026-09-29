@@ -2,7 +2,7 @@
 import os
 import sys
 
-# Ensure the module directory is in sys.path so VoxelizationLib can be imported
+# Ensure the module directory is in sys.path so HexaMesherLib can be imported
 _moduleDir = os.path.dirname(os.path.abspath(__file__))
 if _moduleDir not in sys.path:
     sys.path.insert(0, _moduleDir)
@@ -25,19 +25,19 @@ from slicer import vtkMRMLSegmentationNode
 
 
 # =============================================================================
-# Voxelization  -  Module descriptor
+# HexaMesher  -  Module descriptor
 # Registers the module in Slicer's module menu with metadata.
 # =============================================================================
 #
-# Voxelization
+# HexaMesher
 #
 
 
 # ScriptedLoadableModule provides the standard module registration API.
-class Voxelization(ScriptedLoadableModule):
+class HexaMesher(ScriptedLoadableModule):
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("Voxelization")
+        self.parent.title = _("HexaMesher")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []
         self.parent.contributors = [
@@ -61,22 +61,22 @@ This module was developed by Laura Lichtlein, Domenico Riggio, Ciro Benito Raggi
         registration. Registers the MSH file writer so ".msh" appears
         directly in Slicer's standard "Save Data" dialog.
         """
-        from VoxelizationLib.MSHFileWriter import MSHFileWriter
+        from HexaMesherLib.MSHFileWriter import MSHFileWriter
         slicer.app.ioManager().registerIO(MSHFileWriter(self))
 
 
 #
-# VoxelizationParameterNode
+# HexaMesherParameterNode
 #
 
 
 # =============================================================================
-# VoxelizationParameterNode  -  Typed, auto-serialised parameter storage
+# HexaMesherParameterNode  -  Typed, auto-serialised parameter storage
 # @parameterNodeWrapper generates getters/setters for each field and connects
 # them to the MRML scene so values survive scene save/load and undo/redo.
 # =============================================================================
 @parameterNodeWrapper
-class VoxelizationParameterNode:
+class HexaMesherParameterNode:
     """
     inputVolume       - The VTK reference scalar volume
     inputModel        - The model to be voxelized (Model mode)
@@ -93,16 +93,16 @@ class VoxelizationParameterNode:
 
 
 #
-# VoxelizationWidget
+# HexaMesherWidget
 #
 
 
 # =============================================================================
-# VoxelizationWidget  -  GUI controller
+# HexaMesherWidget  -  GUI controller
 # Inherits ScriptedLoadableModuleWidget (Slicer panel lifecycle) and
 # VTKObservationMixin (safe VTK observer management with auto-cleanup).
 # =============================================================================
-class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
+class HexaMesherWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def __init__(self, parent=None) -> None:
         ScriptedLoadableModuleWidget.__init__(self, parent)
@@ -116,7 +116,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self._lastOutputNode    = None  # Last voxelized output node — used for export
         self._pendingOutputNode = None  # Node created via + button but not yet voxelized
         self._pendingOutputName = None  # Name captured from + button before node was deleted
-        self._lastVoxName       = None  # voxName of the last voxelization — used to detect re-runs
+        self._lastVoxName       = None  # voxName of the last HexaMesher — used to detect re-runs
         self._metricsStore   = {}    # {modelName: {metricKey: value}} — persists metrics per model
 
     # ------------------------------------------------------------------
@@ -154,12 +154,12 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def setup(self) -> None:
         ScriptedLoadableModuleWidget.setup(self)
 
-        uiWidget = slicer.util.loadUI(self.resourcePath("UI/Voxelization.ui"))  # Load the Qt Designer .ui file and embed it in the module panel
+        uiWidget = slicer.util.loadUI(self.resourcePath("UI/HexaMesher.ui"))  # Load the Qt Designer .ui file and embed it in the module panel
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)  # childWidgetVariables creates self.ui.<widgetName> for every named widget
         uiWidget.setMRMLScene(slicer.mrmlScene)  # Required so qMRMLNodeComboBox widgets know which scene to list nodes from
 
-        self.logic = VoxelizationLogic()
+        self.logic = HexaMesherLogic()
 
         # Scene observers
         self.addObserver(slicer.mrmlScene, slicer.mrmlScene.StartCloseEvent, self.onSceneStartClose)  # Observe scene open/close to reset the parameter node accordingly
@@ -182,7 +182,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Set project logo next to the Guide button
         import qt, os
-        logoPath = os.path.join(os.path.dirname(__file__), "Resources", "Icons", "Voxelization.png")
+        logoPath = os.path.join(os.path.dirname(__file__), "Resources", "Icons", "HexaMesher.png")
         if os.path.exists(logoPath):
             pix = qt.QPixmap(logoPath).scaledToHeight(40, qt.Qt.SmoothTransformation)
             self.ui.logoLabel.setPixmap(pix)
@@ -305,7 +305,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.inputModelSelector.setVisible(isModel)
 
         # Segmentation rows
-        # NOTE: widget names must match exactly what is in Voxelization.ui  # NOTE: widget names must match exactly what is declared in Voxelization.ui
+        # NOTE: widget names must match exactly what is in HexaMesher.ui  # NOTE: widget names must match exactly what is declared in HexaMesher.ui
         self.ui.inputSegmentionLabel.setVisible(not isModel)       # "Input segmentation:"  # 'Input segmentation:' label
         self.ui.inputSegmentationSelector.setVisible(not isModel)  # qMRMLNodeComboBox  # qMRMLNodeComboBox filtered to vtkMRMLSegmentationNode
         self.ui.inputSegmentLabel.setVisible(not isModel)          # "Segment:"  # 'Segment:' label
@@ -458,7 +458,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         if self._parameterNode:
             self._parameterNode.outputModel = None
 
-    def setParameterNode(self, inputParameterNode: Optional[VoxelizationParameterNode]) -> None:
+    def setParameterNode(self, inputParameterNode: Optional[HexaMesherParameterNode]) -> None:
         if self._parameterNode:
             self._parameterNode.disconnectGui(self._parameterNodeGuiTag)
             self.removeObserver(self._parameterNode, vtk.vtkCommand.ModifiedEvent, self._checkCanApply)
@@ -537,12 +537,12 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def onGuideButton(self) -> None:
         """Show the Help Guide and Acknowledgements dialog."""
-        from VoxelizationLib.UI.HelpDialog import HelpDialog
+        from HexaMesherLib.UI.HelpDialog import HelpDialog
         dialog = HelpDialog(slicer.util.mainWindow())
         dialog.exec_()
 
     def onVoxelButton(self) -> None:
-        with slicer.util.tryWithErrorDisplay(_("Voxelization failed."), waitCursor=True):
+        with slicer.util.tryWithErrorDisplay(_("HexaMesher failed."), waitCursor=True):
             self.setInfoLabel("")
 
             # Clear previous output so the selector doesn't carry a stale node
@@ -570,7 +570,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             tempMesh  = None
 
             if isModel:
-                # ---- Model mode: trimesh voxelization ----
+                # ---- Model mode: trimesh HexaMesher ----
                 inputMesh      = self.ui.inputModelSelector.currentNode()
                 if not inputMesh:
                     raise ValueError("Please select an input model.")
@@ -972,7 +972,7 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Use stored metrics for the selected model
         if modelName not in self._metricsStore:
-            slicer.util.errorDisplay(f"No metrics stored for '{modelName}'. Run voxelization first.")
+            slicer.util.errorDisplay(f"No metrics stored for '{modelName}'. Run HexaMesher first.")
             return
 
         stored = self._metricsStore[modelName]
@@ -1055,17 +1055,17 @@ class VoxelizationWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
 
 #
-# VoxelizationLogic
+# HexaMesherLogic
 #
 
 
-class VoxelizationLogic(ScriptedLoadableModuleLogic):
+class HexaMesherLogic(ScriptedLoadableModuleLogic):
 
     def __init__(self) -> None:
         ScriptedLoadableModuleLogic.__init__(self)
 
     def getParameterNode(self):
-        return VoxelizationParameterNode(super().getParameterNode())
+        return HexaMesherParameterNode(super().getParameterNode())
 
     def _initModelNode(self, name: str):
         """
@@ -1084,7 +1084,7 @@ class VoxelizationLogic(ScriptedLoadableModuleLogic):
         return node
 
     # ------------------------------------------------------------------
-    # Core voxelization (unchanged from original)
+    # Core HexaMesher (unchanged from original)
     # ------------------------------------------------------------------
 
     def voxelizeModelToModel(self,
@@ -1095,7 +1095,7 @@ class VoxelizationLogic(ScriptedLoadableModuleLogic):
                              threshold: float,
                              ui=None) -> None:
 
-        from VoxelizationLib.logicUtils import (
+        from HexaMesherLib.logicUtils import (
             rasterizeModelToVolume, getVoxelizedModel,
             displayVoxelizedModel, computeMetrics, computeIntensityStats,
         )
@@ -1121,7 +1121,7 @@ class VoxelizationLogic(ScriptedLoadableModuleLogic):
         grid_voxelized       = mask != 0
 
         if ui:  # Step 5: compute and return metric values
-            from VoxelizationLib.logicUtils import computeVolumeCm3, computeIntensityStats
+            from HexaMesherLib.logicUtils import computeVolumeCm3, computeIntensityStats
             originalVolCm3  = computeVolumeCm3(inputModel)
             voxelizedVolCm3 = computeVolumeCm3(voxelizedModel)
 
@@ -1198,24 +1198,24 @@ class VoxelizationLogic(ScriptedLoadableModuleLogic):
 
     def exportModelPLY(self, modelNode, filePath):
         """Export modelNode as a PLY binary file (.ply)."""
-        from VoxelizationLib.logicUtils import exportModelPLY
+        from HexaMesherLib.logicUtils import exportModelPLY
         exportModelPLY(modelNode, filePath)
 
     def exportModelVTK(self, modelNode, filePath):
-        from VoxelizationLib.logicUtils import exportModelVTK
+        from HexaMesherLib.logicUtils import exportModelVTK
         exportModelVTK(modelNode, filePath)
 
     def exportModelSTL(self, modelNode, filePath):
-        from VoxelizationLib.logicUtils import exportModelSTL
+        from HexaMesherLib.logicUtils import exportModelSTL
         exportModelSTL(modelNode, filePath)
 
     def exportModelOBJ(self, modelNode, filePath):
-        from VoxelizationLib.logicUtils import exportModelOBJ
+        from HexaMesherLib.logicUtils import exportModelOBJ
         exportModelOBJ(modelNode, filePath)
 
     def exportModelMSH(self, modelNode, filePath):
         """Export modelNode as a Gmsh MSH 2.2 file (.msh)."""
-        from VoxelizationLib.logicUtils import exportModelMSH
+        from HexaMesherLib.logicUtils import exportModelMSH
         exportModelMSH(modelNode, filePath)
 
     # ------------------------------------------------------------------

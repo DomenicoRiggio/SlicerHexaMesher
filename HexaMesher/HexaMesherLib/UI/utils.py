@@ -9,7 +9,7 @@ CONTRIBUTORS = [
 ]
 
 MODULE_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-LOGO_PATH       = os.path.join(MODULE_ROOT_DIR, 'Resources', 'Icons', 'Voxelization.png').replace('\\', '/')
+LOGO_PATH       = os.path.join(MODULE_ROOT_DIR, 'Resources', 'Icons', 'HexaMesher.png').replace('\\', '/')
 
 def _logo_html(width=200, height=200):
     """Return an <img> tag with the logo embedded as base64 (works in QTextBrowser)."""
@@ -27,7 +27,7 @@ def getHelpText():
 <br/>
 <b>Description</b>
 <br/>
-SlicerModelsVoxelization is an open-source 3D Slicer extension for converting surface meshes
+SlicerHexaMesher is an open-source 3D Slicer extension for converting surface meshes
 and segmentations into solid cubical voxel models, with support for boolean operations,
 quantitative metrics, and multi-format export.
 <br/><br/>
@@ -61,8 +61,8 @@ quantitative metrics, and multi-format export.
 <b>More info</b>
 <ul>
     <li>View the source code on GitHub:
-        <a href="https://github.com/DomenicoRiggio/SlicerModelsVoxelization">
-        https://github.com/DomenicoRiggio/SlicerModelsVoxelization</a></li>
+        <a href="https://github.com/DomenicoRiggio/SlicerHexaMesher">
+        https://github.com/DomenicoRiggio/SlicerHexaMesher</a></li>
 </ul>
 """
 

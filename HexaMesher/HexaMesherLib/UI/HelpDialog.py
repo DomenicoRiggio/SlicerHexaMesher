@@ -3,8 +3,8 @@ import qt
 class HelpDialog(qt.QDialog):
     def __init__(self, parent=None):
         super(HelpDialog, self).__init__(parent)
-        from VoxelizationLib.UI.utils import getHelpText, CONTRIBUTORS
-        self.setWindowTitle("Voxelization - Help Guide and Acknowledgements")
+        from HexaMesherLib.UI.utils import getHelpText, CONTRIBUTORS
+        self.setWindowTitle("HexaMesher - Help Guide and Acknowledgements")
         self.setMinimumWidth(600)
         self.setMinimumHeight(700)
 
